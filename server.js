@@ -251,5 +251,5 @@ app.delete('/api/resource/:id', (req, res) => {
 const server = app.listen(port, () => {
    const host = server.address().address;
    const port = server.address().port;
-   console.log(`SolutionStarterKitCooperationServer listening at http://${host}:${port}`);
+   console.log(`recycle app listening at http://${host}:${port}`);
 });
