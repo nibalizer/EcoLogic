@@ -248,16 +248,32 @@ app.delete('/api/resource/:id', (req, res) => {
     .catch(err => handleError(res, err));
 });
 
+function isURLVerificationEvent(mode, token) {
+  if (mode !== "subscribe" || token !== FB_VER_TOKEN) {
+    return false;
+  }
+  return true;
+}
+
+function isPageObject(params) {
+  if (!(params.object === 'page')) {
+   console.log("Does not come from facebook");
+   return false;
+  }
+  console.log("Comes from facebook");
+  return true;
+}
+
 app.get('/fb', function (req, res) {    // Parse the query params
     let mode = req.query['hub.mode'];
     let token = req.query['hub.verify_token'];
     let challenge = req.query['hub.challenge'];    if (isURLVerificationEvent(mode, token)) {
         // Responds with the challenge token from the request
-        console.log(‘WEBHOOK VERIFIED’);
+        console.log("WEBHOOK VERIFIED");
         res.status(200).send(challenge);
     } else {
         // Responds with ‘403 Forbidden’ if verify tokens do not match
-        console.log(‘WEBHOOK INVALID’);
+        console.log("WEBHOOK INVALID");
         console.log(req.query);
         res.sendStatus(403);
     }
