@@ -8,6 +8,8 @@ const port = process.env.PORT || 3000
 
 const cloudant = require('./lib/cloudant.js');
 
+const vr = require('./lib/visual-recognition.js');
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -284,3 +286,5 @@ const server = app.listen(port, () => {
    const port = server.address().port;
    console.log(`EcoLogic: recycle app listening at http://${host}:${port}`);
 });
+
+console.log(vr.analyze("https://beverages2u.com/wp-content/uploads/2019/05/nestlebottle-2.png"))
