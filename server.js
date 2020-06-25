@@ -251,7 +251,7 @@ app.delete('/api/resource/:id', (req, res) => {
 });
 
 function isURLVerificationEvent(mode, token) {
-  if (mode !== "subscribe" || token !== FB_VER_TOKEN) {
+  if (mode !== "subscribe" || token !== process.env.FB_VER_TOKEN) {
     return false;
   }
   return true;
