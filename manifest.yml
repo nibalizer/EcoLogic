@@ -1,5 +1,5 @@
 applications:
-- name: Recycli-2020
+- name: Ecologic-2020
   command: npm start
   path: .
   memory: 128M

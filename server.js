@@ -266,5 +266,5 @@ app.get('/fb', function (req, res) {    // Parse the query params
 const server = app.listen(port, () => {
    const host = server.address().address;
    const port = server.address().port;
-   console.log(`recycle app listening at http://${host}:${port}`);
+   console.log(`EcoLogic: recycle app listening at http://${host}:${port}`);
 });
