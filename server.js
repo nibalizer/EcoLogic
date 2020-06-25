@@ -248,6 +248,21 @@ app.delete('/api/resource/:id', (req, res) => {
     .catch(err => handleError(res, err));
 });
 
+app.get('/fb', function (req, res) {    // Parse the query params
+    let mode = req.query['hub.mode'];
+    let token = req.query['hub.verify_token'];
+    let challenge = req.query['hub.challenge'];    if (isURLVerificationEvent(mode, token)) {
+        // Responds with the challenge token from the request
+        console.log(‘WEBHOOK VERIFIED’);
+        res.status(200).send(challenge);
+    } else {
+        // Responds with ‘403 Forbidden’ if verify tokens do not match
+        console.log(‘WEBHOOK INVALID’);
+        console.log(req.query);
+        res.sendStatus(403);
+    }
+})
+
 const server = app.listen(port, () => {
    const host = server.address().address;
    const port = server.address().port;
