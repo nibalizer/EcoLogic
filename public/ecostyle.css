@@ -1,0 +1,15 @@
+
+    .nav-link{
+        font-size: large;
+    }
+    .active{
+        font-weight: 600;
+    }
+    nav{
+        background-color: #78d3ab;
+    }
+
+    html {
+        overflow-y: scroll;
+    }
+
