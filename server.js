@@ -3,6 +3,8 @@ require('dotenv').config({silent: true})
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const path = require('path');
+
 const assistant = require('./lib/assistant.js');
 const port = process.env.PORT || 3000
 
@@ -43,11 +45,11 @@ const handleError = (res, err) => {
   const status = err.code !== undefined && err.code > 0 ? err.code : 500;
   return res.status(status).json(err);
 };
-
+/*
 app.get('/', (req, res) => {
   testConnections().then(status => res.json({ status: status }));
 });
-
+*/
 /**
  * Get a session ID
  *
@@ -280,6 +282,20 @@ app.get('/fb', function (req, res) {    // Parse the query params
         res.sendStatus(403);
     }
 })
+
+app.get('/team',function(req,res){
+  res.sendFile(path.join(__dirname+'/public/team.html'));
+})
+
+app.get('/privacy',function(req,res){
+  res.sendFile(path.join(__dirname+'/public/privacy.html'));
+})
+
+app.get('/',function(req,res){
+  res.sendFile(path.join(__dirname+'/public/index.html'));
+})
+
+app.use(express.static('public'));
 
 const server = app.listen(port, () => {
    const host = server.address().address;
