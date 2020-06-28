@@ -10,7 +10,12 @@ const port = process.env.PORT || 3000
 
 const cloudant = require('./lib/cloudant.js');
 
+const wa_context = require('./lib/wa-context.js');
+
 const vr = require('./lib/visual-recognition.js');
+const { text } = require('body-parser');
+
+const fb_postUrl = "https://graph.facebook.com/v6.0/me/messages";
 
 const app = express();
 app.use(bodyParser.json());
@@ -37,6 +42,18 @@ const testConnections = () => {
     .catch(err => {
       console.error(err);
       status['cloudant'] = 'failed';
+      return status
+    })
+    .then(status => {
+      return wa_context.info();
+    })
+    .then(info => {
+      status['wa-context'] = 'ok';
+      return status
+    })
+    .catch(err => {
+      console.error(err);
+      status['wa-context'] = 'failed';
       return status
     });
 };
@@ -73,18 +90,20 @@ app.get('/api/session', (req, res) => {
  * We also modify the text response to match the above.
  */
 function post_process_assistant(result) {
+  if (result.actions) {
+    var action = result.actions[0];
+    switch (action.name) {
+      case 'delet-context':
+        console.log("User ended conversation");
+        //TODO
+        result.delete = true;
+      case 'locations':
+        console.log("User asked for recycling locations");
+        var processed_result = result;
+    }
+  }
+  return Promise.resolve(result)
   let resource
-  // First we look to see if a) Watson did identify an intent (as opposed to not
-  // understanding it at all), and if it did, then b) see if it matched a supplies entity
-  // with reasonable confidence. "supplies" is the term our trained Watson skill uses
-  // to identify the target of a question about resources, i.e.:
-  //
-  // "Where can i find face-masks?"
-  //
-  // ....should return with an enitity == "supplies" and entitty.value = "face-masks"
-  //
-  // That's our trigger to do a lookup - using the entitty.value as the name of resource
-  // to to a datbase lookup.
   if (result.intents.length > 0 ) {
     result.entities.forEach(item => {
       if ((item.entity == "supplies") &&  (item.confidence > 0.3)) {
@@ -123,11 +142,17 @@ app.post('/api/message', (req, res) => {
   const text = req.body.text || '';
   const sessionid = req.body.sessionid;
   console.log(req.body)
-  assistant
-    .message(text, sessionid)
-    .then(result => {
-      return post_process_assistant(result)
-    })
+
+  wa_context.find(sessionid)
+        .then(data => {
+          return assistant.message(text, data.context);
+        })
+        .then(result => {
+          return post_process_assistant(result)
+        })
+        .then(result => {
+          return handleSession(result, sessionid);
+        })
     .then(new_result => {
       res.json(new_result)
     })
@@ -283,6 +308,163 @@ app.get('/fb', function (req, res) {    // Parse the query params
     }
 })
 
+app.post('/fb',  function (req, res) {
+  try {
+      let body = req.body;
+      if (isPageObject(body)) {
+        console.log(body);
+        
+        const sessionId = body.entry[0].messaging[0].sender.id;
+        const text = body.entry[0].messaging[0].message.text;
+        const attachments = body.entry[0].messaging[0].message.attachments;
+        //console.log(sessionId,text,attachments);
+        
+        wa_context.find(sessionId)
+        .then( data => {
+          console.log(data);
+          return handleAttachments(attachments, data.doc.context, text)
+        })
+        .then(data => {
+          console.log(data.context);
+          return assistant.message(data.text, data.context);
+        })
+        .then(result => {
+          //console.log(result);
+          return post_process_assistant(result)
+        })
+        .then(result => {
+          return postFacebook(result, sessionId);
+        })
+        .then(result => {
+          return handleSession(result, sessionId);
+        })
+        .then(new_result => {
+          res.json({
+            text: 200, 
+            message: new_result
+          })
+        })
+        .catch(err => handleError(res, err));
+      }
+    }catch (err) {
+      console.error('Caught error: ');
+      console.log(err);
+      res.status(500).send(err)
+    }
+  })
+
+/**
+ *  Poste la respuesta de la convesacion al messenger usando el Facebook API https://graph.facebook.com/v2.6/me/messages
+ *
+ *  @result  {JSON} Respuesta de Watson
+ *  @userid  {string} Id de usuario de facebok
+ *
+ *  @return - Status del request al POST API
+ */
+function postFacebook(result, userid) {
+  console.log('Entro a enviar a facebook');
+
+  const facebookParams = {
+    recipient: {
+      id: userid
+    },
+    // Get payload for regular text message or interactive message
+    message: getMessageType(result)
+  };
+
+
+  return new Promise(function(resolve, reject){
+    request(
+      {
+        url: fb_postUrl,
+        qs: { access_token: FB_PAGE_ACCESS_TOKEN },
+        method: 'POST',
+        json: facebookParams
+      },
+      function(error, response)  {
+        if (error) {
+          return reject(error.message);
+        }
+        if (response) {
+          if (response.statusCode === 200) {
+            return resolve(result);
+          }
+          return reject(
+            `Action returned with status code ${response.statusCode}, message: ${response.statusMessage}`
+          );
+        }
+        reject(`An unexpected error occurred when sending POST to ${postUrl}.`);
+      }
+    );
+  });
+}
+
+/**
+ * Evalua los mensajes para extraer el payload interactivo o el mensaje de texto
+ *
+ * @params {JSON} Parametros de la accion
+ * @return {JSON} - El archivo adjunto o el mensaje de texto
+ */
+function getMessageType(params) {
+    
+  const textMessage = params.output.text.join(' ');
+  // If dialog node sends back output.facebook (used for interactive messages such as
+  // buttons and templates)
+  if (params.output.facebook) {
+      const interactiveMessage = params.output.facebook;
+    // An acceptable interactive JSON could either be of form -> output.facebook or
+    // output.facebook.message. Facebook's Send API accepts the "message" payload. So,
+    // if you already wrap your interactive message inside "message" object, then we
+    // accept it as-is. And if you don't wrap your interactive message inside "message"
+    // object, then the code wraps it for you.
+    if (interactiveMessage.message) {
+      //console.log('Output interactive: ' + interactiveMessage.message);
+      return interactiveMessage.message;
+    }
+    //console.log('Output interactive: ' + interactiveMessage);
+    return interactiveMessage;
+  }
+  //console.log('Output text: ' + textMessage);
+  // if regular text message is received
+  return { text: textMessage };
+}
+
+
+function handleAttachments(attachments, context, text){
+  //console.log(context);
+  
+  return new Promise(function(resolve, reject){
+    if(attachments && attachments[0].type == 'image'){
+      vr.analyze(attachments[0].payload.url)
+      .then(result => {
+        if(!context.skills){
+          context.skills = {};
+        }
+        if(!context.skills['main skill']){
+          context.skills['main skill'] = {};
+        }
+        if(!context.skills['main skill'].user_defined){
+          context.skills['main skill'].user_defined = {};
+        }
+        context.skills['main skill'].user_defined.images = result;
+        resolve({text: "images", context: context });
+      })
+    }else{
+      resolve({text: text, context : context});
+    }
+  });
+}
+
+function handleSession(result,sessionId){
+  if(result.delete){
+    "Destroying Context"
+    return wa_context.deleteById(sessionId);
+  }else{
+    console.log("Saving Context");
+    return wa_context.update(sessionId, result.context);
+  }
+}
+
 app.get('/team',function(req,res){
   res.sendFile(path.join(__dirname+'/public/team.html'));
 })
@@ -303,4 +485,5 @@ const server = app.listen(port, () => {
    console.log(`EcoLogic: recycle app listening at http://${host}:${port}`);
 });
 
-console.log(vr.analyze("https://beverages2u.com/wp-content/uploads/2019/05/nestlebottle-2.png"))
+//console.log(vr.analyze("https://ak.picdn.net/shutterstock/videos/1014467753/thumb/6.jpg"));
+//console.log(assistant.message('Hi'));
