@@ -432,9 +432,9 @@ function handleAttachments(attachments, context, text){
 
           const type = img.category;
           const name = img.name;
-          const description = req.body.description || '';
-          const quantity = req.body.quantity || 1;
-          const location = req.body.location || '';
+          const description = '';
+          const quantity = 1;
+          const location = '';
           const confidence = img.raw_confidence
 
           cloudant.create(type, name, description, quantity, location, confidence)
