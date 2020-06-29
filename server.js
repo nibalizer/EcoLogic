@@ -290,15 +290,15 @@ app.post('/fb',  function (req, res) {
         
         wa_context.find(sessionId)
         .then( data => {
-          console.log(data);
+          //console.log(data);
           return handleAttachments(attachments, data.doc.context, text)
         })
         .then(data => {
-          console.log(data.context);
+          //console.log(data.context);
           return assistant.message(data.text, data.context);
         })
         .then(result => {
-          console.log(result);
+          console.log(JSON.stringify(result));
           return post_process_assistant(result)
         })
         .then(result => {
@@ -306,10 +306,12 @@ app.post('/fb',  function (req, res) {
           (async function loop() {
             for (let i = 0; i < result.output.generic.length; i++) {
                 const msg = result.output.generic[i];
-                await postFacebook(msg.text, sessionId);
+                await postFacebook(msg, sessionId);
                 console.log(i);
             }
-        })();
+        })()
+        .catch(err => console.log(err));
+        
         return result;
           //for (let i = 0; i < result.generic.length; i++) {
           //  const msg = result.generic[i];
@@ -351,7 +353,7 @@ function postFacebook(msg, userid) {
       id: userid
     },
     // Get payload for regular text message or interactive message
-    message: { text: msg }
+    message: getMessageType(msg)
   };
 
   return new Promise(function(resolve, reject){
@@ -386,28 +388,46 @@ function postFacebook(msg, userid) {
  * @params {JSON} Parametros de la accion
  * @return {JSON} - El archivo adjunto o el mensaje de texto
  */
-function getMessageType(params) {
+function getMessageType(msg) {
     
-  const textMessage = params.output.generic.join(' ');
-  // If dialog node sends back output.facebook (used for interactive messages such as
-  // buttons and templates)
-  if (params.output.facebook) {
-      const interactiveMessage = params.output.facebook;
-    // An acceptable interactive JSON could either be of form -> output.facebook or
-    // output.facebook.message. Facebook's Send API accepts the "message" payload. So,
-    // if you already wrap your interactive message inside "message" object, then we
-    // accept it as-is. And if you don't wrap your interactive message inside "message"
-    // object, then the code wraps it for you.
-    if (interactiveMessage.message) {
-      //console.log('Output interactive: ' + interactiveMessage.message);
-      return interactiveMessage.message;
+  if(msg.response_type=='search'){
+    var elements = [];
+    for (let i = 0; i < msg.results.length; i++) {
+      const btn = msg.results[i];
+      var btn_format = {
+        title: btn.title,
+        subtitle: btn.text,
+        buttons: [
+          {
+            title: "View",
+            type: "web_url",
+            url:  btn.url,
+            messenger_extensions: true,
+            webview_height_ratio: "tall",
+          }
+        ]
+      };
+      elements.push(btn_format);
     }
-    //console.log('Output interactive: ' + interactiveMessage);
-    return interactiveMessage;
+     var res = {
+      attachment:{
+        type: "template",
+        payload:{
+          template_type: "list",
+          text: msg.header,
+          elements:[
+            
+          ]
+        }
+      }
+     }
+
+    return res;
   }
-  //console.log('Output text: ' + textMessage);
-  // if regular text message is received
-  return { text: textMessage };
+  if(msg.response_type=='text'){
+    return { text: msg.text };
+  }
+  return { text: msg.text };
 }
 
 
