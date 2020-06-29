@@ -2,6 +2,7 @@ require('dotenv').config({silent: true})
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const request = require('request');
 
 const path = require('path');
 
@@ -15,7 +16,7 @@ const wa_context = require('./lib/wa-context.js');
 const vr = require('./lib/visual-recognition.js');
 const { text } = require('body-parser');
 
-const fb_postUrl = "https://graph.facebook.com/v6.0/me/messages";
+const fb_postUrl = "https://graph.facebook.com/v7.0/me/messages";
 
 const app = express();
 app.use(bodyParser.json());
@@ -81,13 +82,6 @@ app.get('/api/session', (req, res) => {
 
 /**
  * Post process the response from Watson Assistant
- *
- * We want to see if this was a request for resources/supplies, and if so
- * look up in the Cloudant DB whether any of the requested resources are
- * available. If so, we insert a list of the resouces found into the response
- * that will sent back to the client.
- * 
- * We also modify the text response to match the above.
  */
 function post_process_assistant(result) {
   if (result.actions) {
@@ -103,31 +97,6 @@ function post_process_assistant(result) {
     }
   }
   return Promise.resolve(result)
-  let resource
-  if (result.intents.length > 0 ) {
-    result.entities.forEach(item => {
-      if ((item.entity == "supplies") &&  (item.confidence > 0.3)) {
-        resource = item.value
-      }
-    })
-  }
-  if (!resource) {
-    return Promise.resolve(result)
-  } else {
-    // OK, we have a resource...let's look this up in the DB and see if anyone has any.
-    return cloudant
-      .find('', resource, '')
-      .then(data => {
-        let processed_result = result
-        if ((data.statusCode == 200) && (data.data != "[]")) {
-          processed_result["resources"] = JSON.parse(data.data)
-          processed_result["generic"][0]["text"] = 'There is' + '\xa0' + resource + " available"
-        } else {
-          processed_result["generic"][0]["text"] = "Sorry, no" + '\xa0' + resource + " available"           
-        }
-        return processed_result
-      })
-  }
 }
 
 /**
@@ -329,11 +298,24 @@ app.post('/fb',  function (req, res) {
           return assistant.message(data.text, data.context);
         })
         .then(result => {
-          //console.log(result);
+          console.log(result);
           return post_process_assistant(result)
         })
         .then(result => {
-          return postFacebook(result, sessionId);
+          console.log(result);
+          (async function loop() {
+            for (let i = 0; i < result.output.generic.length; i++) {
+                const msg = result.output.generic[i];
+                await postFacebook(msg.text, sessionId);
+                console.log(i);
+            }
+        })();
+        return result;
+          //for (let i = 0; i < result.generic.length; i++) {
+          //  const msg = result.generic[i];
+          //  await postFacebook(msg.text, sessionId);
+          //}
+          //return postFacebook(result, sessionId);
         })
         .then(result => {
           return handleSession(result, sessionId);
@@ -361,7 +343,7 @@ app.post('/fb',  function (req, res) {
  *
  *  @return - Status del request al POST API
  */
-function postFacebook(result, userid) {
+function postFacebook(msg, userid) {
   console.log('Entro a enviar a facebook');
 
   const facebookParams = {
@@ -369,15 +351,14 @@ function postFacebook(result, userid) {
       id: userid
     },
     // Get payload for regular text message or interactive message
-    message: getMessageType(result)
+    message: { text: msg }
   };
-
 
   return new Promise(function(resolve, reject){
     request(
       {
         url: fb_postUrl,
-        qs: { access_token: FB_PAGE_ACCESS_TOKEN },
+        qs: { access_token: process.env.FB_PAGE_ACCESS_TOKEN },
         method: 'POST',
         json: facebookParams
       },
@@ -387,7 +368,7 @@ function postFacebook(result, userid) {
         }
         if (response) {
           if (response.statusCode === 200) {
-            return resolve(result);
+            return resolve(msg);
           }
           return reject(
             `Action returned with status code ${response.statusCode}, message: ${response.statusMessage}`
@@ -407,7 +388,7 @@ function postFacebook(result, userid) {
  */
 function getMessageType(params) {
     
-  const textMessage = params.output.text.join(' ');
+  const textMessage = params.output.generic.join(' ');
   // If dialog node sends back output.facebook (used for interactive messages such as
   // buttons and templates)
   if (params.output.facebook) {
