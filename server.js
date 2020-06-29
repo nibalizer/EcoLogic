@@ -162,7 +162,6 @@ app.get('/api/resource', (req, res) => {
  * 
  * - type
  * - name
- * - contact
  * - userID
  *
  * The body may also contain:
@@ -172,7 +171,9 @@ app.get('/api/resource', (req, res) => {
  * 
  * The ID and rev of the resource will be returned if successful
  */
-let types = ["Food", "Other", "Help"]
+let types = ["Not Recyclable", "Recyclable", "Organic", ]
+let names = ["Styrofoam", "Plastic bag", "Batteries", "Plastic", "Cardboard", "Paper", "Metal", "Glass", "Leather", "Aluminum/Plastic Packaging", "Fruit", "Vegetable", "Coffee", "Gardening"]
+
 app.post('/api/resource', (req, res) => {
   if (!req.body.type) {
     return res.status(422).json({ errors: "Type of item must be provided"});
@@ -183,19 +184,16 @@ app.post('/api/resource', (req, res) => {
   if (!req.body.name) {
     return res.status(422).json({ errors: "Name of item must be provided"});
   }
-  if (!req.body.contact) {
-    return res.status(422).json({ errors: "A method of conact must be provided"});
-  }
   const type = req.body.type;
   const name = req.body.name;
   const description = req.body.description || '';
   const userID = req.body.userID || '';
   const quantity = req.body.quantity || 1;
   const location = req.body.location || '';
-  const contact = req.body.contact;
+  const confidence = req.body.confidence || '';
 
   cloudant
-    .create(type, name, description, quantity, location, contact, userID)
+    .create(type, name, description, quantity, location, confidence)
     .then(data => {
       if (data.statusCode != 201) {
         res.sendStatus(data.statusCode)
@@ -222,10 +220,10 @@ app.patch('/api/resource/:id', (req, res) => {
   const userID = req.body.userID || '';
   const quantity = req.body.quantity || '';
   const location = req.body.location || '';
-  const contact = req.body.contact || '';
+  const confidence = req.body.confidence || '';
 
   cloudant
-    .update(req.params.id, type, name, description, quantity, location, contact, userID)
+    .update(req.params.id, type, name, description, quantity, location, userID)
     .then(data => {
       if (data.statusCode != 200) {
         res.sendStatus(data.statusCode)
@@ -320,6 +318,7 @@ app.post('/fb',  function (req, res) {
           //return postFacebook(result, sessionId);
         })
         .then(result => {
+
           return handleSession(result, sessionId);
         })
         .then(new_result => {
@@ -448,6 +447,18 @@ function handleAttachments(attachments, context, text){
           context.skills['main skill'].user_defined = {};
         }
         context.skills['main skill'].user_defined.images = result;
+
+        for (const img of result) {
+
+          const type = img.category;
+          const name = img.name;
+          const description = req.body.description || '';
+          const quantity = req.body.quantity || 1;
+          const location = req.body.location || '';
+          const confidence = img.raw_confidence
+
+          cloudant.create(type, name, description, quantity, location, confidence)
+        }
         resolve({text: "images", context: context });
       })
     }else{
@@ -465,6 +476,10 @@ function handleSession(result,sessionId){
     return wa_context.update(sessionId, result.context);
   }
 }
+
+app.get('/dashboard',function(req,res){
+  res.sendFile(path.join(__dirname+'/public/dashboard.html'));
+})
 
 app.get('/team',function(req,res){
   res.sendFile(path.join(__dirname+'/public/team.html'));
