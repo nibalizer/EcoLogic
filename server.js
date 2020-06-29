@@ -365,9 +365,11 @@ function postFacebook(msg, userid) {
       },
       function(error, response)  {
         if (error) {
+          //console.log(error);
           return reject(error.message);
         }
         if (response) {
+          //console.log(response);
           if (response.statusCode === 200) {
             return resolve(msg);
           }
@@ -390,38 +392,16 @@ function postFacebook(msg, userid) {
 function getMessageType(msg) {
     
   if(msg.response_type=='search'){
-    var elements = [];
+    var textresponse = msg.header + "\n";
     for (let i = 0; i < msg.results.length; i++) {
       const btn = msg.results[i];
-      var btn_format = {
-        title: btn.title,
-        subtitle: btn.text,
-        buttons: [
-          {
-            title: "View",
-            type: "web_url",
-            url:  btn.url,
-            messenger_extensions: true,
-            webview_height_ratio: "tall",
-          }
-        ]
-      };
-      elements.push(btn_format);
+      textresponse += btn.title + "\n";
+      textresponse += btn.body + "\n"; 
+      textresponse += btn.url + "\n";
+      textresponse += "\n" + "\n"; 
     }
-     var res = {
-      attachment:{
-        type: "template",
-        payload:{
-          template_type: "list",
-          text: msg.header,
-          elements:[
-            
-          ]
-        }
-      }
-     }
-
-    return res;
+    
+    return { text: textresponse };
   }
   if(msg.response_type=='text'){
     return { text: msg.text };
