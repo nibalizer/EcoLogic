@@ -296,7 +296,7 @@ app.post('/fb',  function (req, res) {
           return assistant.message(data.text, data.context);
         })
         .then(result => {
-          console.log(JSON.stringify(result));
+          //console.log(JSON.stringify(result));
           return post_process_assistant(result)
         })
         .then(result => {
@@ -392,14 +392,16 @@ function postFacebook(msg, userid) {
 function getMessageType(msg) {
     
   if(msg.response_type=='search'){
-    var textresponse = msg.header + "\n";
-    for (let i = 0; i < msg.results.length; i++) {
+    var textresponse = msg.header + "\n" + "\n";
+    
+    for (let i = 0; i < Math.min(msg.results.length, 2 ); i++) {
       const btn = msg.results[i];
       textresponse += btn.title + "\n";
-      textresponse += btn.body + "\n"; 
+      textresponse += btn.body.slice(0, 100) + "...\n"; 
       textresponse += btn.url + "\n";
-      textresponse += "\n" + "\n"; 
+      textresponse += "\n"; 
     }
+    console.log(textresponse);
     
     return { text: textresponse };
   }
