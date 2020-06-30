@@ -401,6 +401,7 @@ function handleAttachments(attachments, context, text) {
           }
           resolve({ text: "images", context: context });
         })
+        .catch(err => resolve({ text: "no-images", context: context }));
     } else {
       resolve({ text: text, context: context });
     }
@@ -441,5 +442,5 @@ const server = app.listen(port, () => {
   console.log(`EcoLogic: recycle app listening at http://${host}:${port}`);
 });
 
-console.log(vr.analyze("https://i.pinimg.com/originals/f9/be/45/f9be45571077d108655addfeaf8b931e.jpg"));
+//console.log(vr.analyze("https://storage.googleapis.com/support-forums-api/attachment/thread-11603890-12493098232223897460.png"));
 //console.log(assistant.message('Hi'));
