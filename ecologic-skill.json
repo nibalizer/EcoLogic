@@ -1,0 +1,1633 @@
+{
+  "intents": [
+    {
+      "intent": "classify-waste",
+      "examples": [
+        {
+          "text": "How can I recycle this?"
+        },
+        {
+          "text": "How can I classify this?"
+        },
+        {
+          "text": "Am I able to reuse this?"
+        },
+        {
+          "text": "Is this something I can recycle?"
+        },
+        {
+          "text": "I want to reuse this"
+        },
+        {
+          "text": "can you help me classify my trash?"
+        },
+        {
+          "text": "can I recycle wet cardboard?"
+        },
+        {
+          "text": "How can I process paper?"
+        },
+        {
+          "text": "I wan to recycle this"
+        },
+        {
+          "text": "What can I do with this?"
+        }
+      ],
+      "description": "Waste classification"
+    },
+    {
+      "intent": "General_Accept",
+      "examples": [
+        {
+          "text": "yes"
+        },
+        {
+          "text": "sure"
+        },
+        {
+          "text": "of course"
+        },
+        {
+          "text": "yeah"
+        },
+        {
+          "text": "I accept"
+        },
+        {
+          "text": "I agree"
+        },
+        {
+          "text": "ya"
+        },
+        {
+          "text": "Perfect"
+        }
+      ],
+      "description": "The user accepts the question or proposal from the bot"
+    },
+    {
+      "intent": "Genera_Rejects",
+      "examples": [
+        {
+          "text": "I dont agree"
+        },
+        {
+          "text": "naw"
+        },
+        {
+          "text": "not at all"
+        },
+        {
+          "text": "reject"
+        },
+        {
+          "text": "nop"
+        },
+        {
+          "text": "nah"
+        },
+        {
+          "text": "no"
+        }
+      ],
+      "description": "The user rejects or denies de question or proposal"
+    },
+    {
+      "intent": "General_Human_or_Bot",
+      "examples": [
+        {
+          "text": "Are you a robot?"
+        },
+        {
+          "text": "Is this a computer?"
+        },
+        {
+          "text": "Am I chatting with a human?"
+        },
+        {
+          "text": "Am I talking to Watson?"
+        },
+        {
+          "text": "Am I talking to a Bot?"
+        },
+        {
+          "text": "Am I talking to a person or am I talking to an AI?"
+        },
+        {
+          "text": "Are you a human or a bot?"
+        },
+        {
+          "text": "How can you prove you are a human?"
+        },
+        {
+          "text": "Are you real?"
+        },
+        {
+          "text": "Are you human?"
+        },
+        {
+          "text": "Are you even real?"
+        },
+        {
+          "text": "Tell me, are you a human or no?"
+        }
+      ]
+    },
+    {
+      "intent": "General_Ending",
+      "examples": [
+        {
+          "text": "Good. bye."
+        },
+        {
+          "text": "Ok goodbye"
+        },
+        {
+          "text": "See you later"
+        },
+        {
+          "text": "See you"
+        },
+        {
+          "text": "Shut up"
+        },
+        {
+          "text": "Stop doing this"
+        },
+        {
+          "text": "Stop talking to me"
+        },
+        {
+          "text": "Thank you for your time"
+        },
+        {
+          "text": "Thanks, bye!"
+        },
+        {
+          "text": "Thanks very much, bye!"
+        },
+        {
+          "text": "That is all"
+        },
+        {
+          "text": "That's everything"
+        },
+        {
+          "text": "Have a nice day?"
+        },
+        {
+          "text": "Bye bye"
+        },
+        {
+          "text": "Bye now"
+        },
+        {
+          "text": "Catch you later"
+        },
+        {
+          "text": "Cya later"
+        },
+        {
+          "text": "End trial"
+        },
+        {
+          "text": "Ending this session"
+        },
+        {
+          "text": "Finished now, good bye"
+        },
+        {
+          "text": "Get lost"
+        },
+        {
+          "text": "Go away"
+        },
+        {
+          "text": "Go off"
+        },
+        {
+          "text": "Going now"
+        },
+        {
+          "text": "Goodbye"
+        },
+        {
+          "text": "Hey bot go away"
+        },
+        {
+          "text": "Im done"
+        },
+        {
+          "text": "I'm done"
+        },
+        {
+          "text": "I want to quit"
+        },
+        {
+          "text": "I have got to go"
+        },
+        {
+          "text": "I d like to stop doing this"
+        },
+        {
+          "text": "I am out of here"
+        },
+        {
+          "text": "I am leaving"
+        },
+        {
+          "text": "Time to go"
+        },
+        {
+          "text": "Im good thank you"
+        },
+        {
+          "text": "I'm leaving now"
+        },
+        {
+          "text": "It was nice chatting with you"
+        }
+      ],
+      "description": "End the conversation."
+    },
+    {
+      "intent": "General_Agent_Capabilities",
+      "examples": [
+        {
+          "text": "What can I ask you to do?"
+        },
+        {
+          "text": "I'd like to know what type of questions you can answer for me."
+        },
+        {
+          "text": "I do not know what to ask"
+        },
+        {
+          "text": "How do I use you?"
+        },
+        {
+          "text": "How can you solve my problems?"
+        },
+        {
+          "text": "How can you help me?"
+        },
+        {
+          "text": "How can I use you?"
+        },
+        {
+          "text": "Tell me about what kind of things you do?"
+        },
+        {
+          "text": "Is there anything you can help me with?"
+        },
+        {
+          "text": "Tell me something"
+        },
+        {
+          "text": "What are my options that you can help with?"
+        },
+        {
+          "text": "What are my options?"
+        },
+        {
+          "text": "What are you able to deal with?"
+        },
+        {
+          "text": "What are you able to understand?"
+        },
+        {
+          "text": "What are you capable of?"
+        },
+        {
+          "text": "What are you good at?"
+        },
+        {
+          "text": "What are you used for?"
+        },
+        {
+          "text": "What are your skills?"
+        },
+        {
+          "text": "Can you please give me a list of the types of things you can help me with?"
+        },
+        {
+          "text": "What do you do?"
+        },
+        {
+          "text": "Can you tell me what services you are able to help me with?"
+        },
+        {
+          "text": "What do you handle?"
+        },
+        {
+          "text": "Do you have a list of things I can talk to you about?"
+        },
+        {
+          "text": "Help now"
+        },
+        {
+          "text": "Hi, what do you do?"
+        },
+        {
+          "text": "What else can you help me with?"
+        },
+        {
+          "text": "What features are in here?"
+        },
+        {
+          "text": "What is this 4?"
+        },
+        {
+          "text": "What kinds of things can you do?"
+        },
+        {
+          "text": "Where can I find the frequently asked questions?"
+        }
+      ]
+    },
+    {
+      "intent": "General_About_You",
+      "examples": [
+        {
+          "text": "I want to set up the chat bot for my shop"
+        },
+        {
+          "text": "Where are you from?"
+        },
+        {
+          "text": "Where were you born?"
+        },
+        {
+          "text": "Who are you?"
+        },
+        {
+          "text": "Why are you here?"
+        },
+        {
+          "text": "How old are you?"
+        },
+        {
+          "text": "What's your name?"
+        },
+        {
+          "text": "Can I use another language?"
+        },
+        {
+          "text": "Describe your self"
+        },
+        {
+          "text": "Introduce your self"
+        },
+        {
+          "text": "Do you have a name?"
+        },
+        {
+          "text": "About you"
+        },
+        {
+          "text": "Let us talk about you"
+        },
+        {
+          "text": "How do you function?"
+        },
+        {
+          "text": "How can I configure you?"
+        },
+        {
+          "text": "Do you know who you are?"
+        },
+        {
+          "text": "Tell me about your life"
+        },
+        {
+          "text": "Tell me something about yourself"
+        },
+        {
+          "text": "What languages do you speak?"
+        },
+        {
+          "text": "What should I know about you?"
+        }
+      ],
+      "description": "Request generic personal attributes."
+    },
+    {
+      "intent": "General_Greetings",
+      "examples": [
+        {
+          "text": "What's up?"
+        },
+        {
+          "text": "Who is this?"
+        },
+        {
+          "text": "You there"
+        },
+        {
+          "text": "Hello"
+        },
+        {
+          "text": "Hello I am looking for some help here"
+        },
+        {
+          "text": "Hello Agent"
+        },
+        {
+          "text": "Greetings"
+        },
+        {
+          "text": "Have you been well?"
+        },
+        {
+          "text": "Good to see you"
+        },
+        {
+          "text": "Good morning"
+        },
+        {
+          "text": "Good evening"
+        },
+        {
+          "text": "Good day"
+        },
+        {
+          "text": "How are things going?"
+        },
+        {
+          "text": "Hey how are you doing"
+        },
+        {
+          "text": "Hey there all"
+        },
+        {
+          "text": "Hey there"
+        },
+        {
+          "text": "Hey twin"
+        },
+        {
+          "text": "Hey you"
+        },
+        {
+          "text": "Hi advisor"
+        },
+        {
+          "text": "Hi there"
+        },
+        {
+          "text": "How are you today?"
+        },
+        {
+          "text": "How have you been?"
+        },
+        {
+          "text": "How is it going?"
+        },
+        {
+          "text": "How r u?"
+        },
+        {
+          "text": "Looking good eve"
+        },
+        {
+          "text": "Ok take me back"
+        },
+        {
+          "text": "What's new?"
+        }
+      ],
+      "description": "Greet the bot."
+    },
+    {
+      "intent": "General_Negative_Feedback",
+      "examples": [
+        {
+          "text": "I hate this!"
+        },
+        {
+          "text": "Robots are stupid"
+        },
+        {
+          "text": "Robots are boring"
+        },
+        {
+          "text": "Quit annoying me"
+        },
+        {
+          "text": "It is annoying"
+        },
+        {
+          "text": "You're too stupid"
+        },
+        {
+          "text": "You're really irritating"
+        },
+        {
+          "text": "You're really frustrating"
+        },
+        {
+          "text": "You do not seem smart"
+        },
+        {
+          "text": "You are very frustrating"
+        },
+        {
+          "text": "You are on my nerves"
+        },
+        {
+          "text": "You are having delusions"
+        },
+        {
+          "text": "Why are you stupid?"
+        },
+        {
+          "text": "Why are you so annoying?"
+        },
+        {
+          "text": "I hate you"
+        },
+        {
+          "text": "I do not like you"
+        },
+        {
+          "text": "Hate you"
+        },
+        {
+          "text": "Everyone hates you"
+        },
+        {
+          "text": "Do not like you?"
+        },
+        {
+          "text": "Stupid"
+        }
+      ]
+    },
+    {
+      "intent": "General_Jokes",
+      "examples": [
+        {
+          "text": "What is your favorite joke?"
+        },
+        {
+          "text": "What do you do for fun?"
+        },
+        {
+          "text": "Tell me something funny"
+        },
+        {
+          "text": "Tell me a joke"
+        },
+        {
+          "text": "Surprise me with something hilarious"
+        },
+        {
+          "text": "One more joke"
+        },
+        {
+          "text": "I'm bored"
+        },
+        {
+          "text": "I want a joke"
+        },
+        {
+          "text": "I am getting bored"
+        },
+        {
+          "text": "Do you like humor?"
+        },
+        {
+          "text": "Do you have humor?"
+        },
+        {
+          "text": "Do you have a joke?"
+        },
+        {
+          "text": "Can you tell me a joke?"
+        },
+        {
+          "text": "Can you tell a joke?"
+        },
+        {
+          "text": "Are there jokes?"
+        },
+        {
+          "text": "Another joke"
+        },
+        {
+          "text": "Do you like fun?"
+        }
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "entity": "waste",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "cardboards",
+          "synonyms": [
+            "cardboard",
+            "cardboards",
+            "paperboard",
+            "carboard",
+            "corrugate",
+            "posterboard",
+            "matchboxes",
+            "posterboards",
+            "cartons",
+            "cartonboard",
+            "boxboard",
+            "carton",
+            "boxes",
+            "box",
+            "paperboards",
+            "shoebox"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "images",
+          "synonyms": [
+            "image",
+            "picture",
+            "photo",
+            "pic",
+            "photograph",
+            "photos",
+            "photography",
+            "pics",
+            "pix",
+            "snapshots",
+            "bitmap",
+            "imagery"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "packages",
+          "synonyms": [
+            "package",
+            "packings",
+            "bundle",
+            "packets",
+            "packaged",
+            "paquet",
+            "packing",
+            "kit",
+            "containers",
+            "packaging",
+            "container",
+            "bins",
+            "wrapping",
+            "packs",
+            "packagings",
+            "crates",
+            "cages"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "plastics",
+          "synonyms": [
+            "plastic",
+            "plastics",
+            "rubber",
+            "thermoplastics",
+            "pvc",
+            "bioplastics",
+            "bioplastic",
+            "thermoplastic",
+            "plastiques"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "straws",
+          "synonyms": [
+            "straws",
+            "straw"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "styrofoam",
+          "synonyms": [
+            "Styrofoam",
+            "Styrofoams",
+            "foam",
+            "mattress",
+            "neoprene",
+            "foams",
+            "matress",
+            "polyurethane",
+            "urethane",
+            "elastomer",
+            "thermoplastic"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    },
+    "from-sample": true
+  },
+  "dialog_nodes": [
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The shiny lining in chip bags is often aluminum or a special mixed plastic. Since some recycling plants cannot separate the plastic outer layer from the aluminum inner layer, these mixed-material bags are hard to be recycled. However, we can contribute by cleaning all packages."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Was this useful?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1584231342659",
+      "context": {
+        "input_query": {
+          "": "<? input.text ?>"
+        }
+      },
+      "conditions": "@waste:packages",
+      "dialog_node": "response_10_1593540211720",
+      "previous_sibling": "response_9_1593299419069"
+    },
+    {
+      "type": "standard",
+      "title": "User is ok",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Alright, its a pleasure to help you."
+              },
+              {
+                "text": "Cool, have a nice recycling"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "parent": "node_10_1584231342659",
+      "conditions": "#General_Accept",
+      "dialog_node": "node_1_1593458402935",
+      "previous_sibling": "node_4_1593456874943"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "While hard plastic containers like water bottles, milk jugs and detergent containers can go in your recycle container, flexible plastics like grocery bags, bubble wrap and styrofoam require special handling and can’t be recycled curbside."
+              },
+              {
+                "text": "Lids are too small to recycle by themselves, so put them on the containers or throw them away."
+              },
+              {
+                "text": "If you can poke your finger through the plastic, it doesn’t belong in your recycling container."
+              },
+              {
+                "text": "Remember to remove the labels from the plastic containers."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "values": [
+              {
+                "text": "Was this useful?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1584231342659",
+      "context": {
+        "input_query": "<? input.text ?>"
+      },
+      "conditions": "@waste:plastics",
+      "dialog_node": "response_7_1585167995210",
+      "previous_sibling": "node_1_1593458402935"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "query": "",
+            "filter": "",
+            "query_type": "natural_language",
+            "response_type": "search_skill"
+          },
+          {
+            "values": [
+              {
+                "text": "If you want me to help you classify your trash to recycle, just send me a picture :)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1584231342659",
+      "dialog_node": "response_7_1593548216923",
+      "previous_sibling": "response_6_1593458576996"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I'm gonna need a picture/image of the object to help you"
+              },
+              {
+                "text": "Please send a picture/image of the object you would like me to classify."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "parent": "node_10_1584231342659",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "user_input",
+        "dialog_node": "node_1_1593400006221"
+      },
+      "conditions": "@waste:images",
+      "dialog_node": "response_6_1593458576996",
+      "previous_sibling": "response_10_1593540243814"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Flattened cardboard, newspaper, magazines, office paper and common mail can be recycled as long as they aren’t contaminated by food, liquid or waste."
+              },
+              {
+                "text": "Break down cardboard boxes. It makes them easier to process and leaves more room for other recyclables."
+              },
+              {
+                "text": "Paper can’t be recycled if it’s mixed with other materials. Remove the bubble wrap or plastic windows before recycling padded packaging or security envelopes."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "values": [
+              {
+                "text": "Was this useful?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1584231342659",
+      "context": {
+        "input_query": "<? input.text ?>"
+      },
+      "conditions": "@waste:cardboards",
+      "dialog_node": "response_9_1593299419069",
+      "previous_sibling": "response_7_1585167995210"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Styrofoam is not recyclable in our curbside bin but then why does it have a recycling symbol on it? Since it has polystyrene, it does have properties that make it recyclable, but it has to be taken to the right location. Anyway, reusable containers are better :)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Was this useful?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1584231342659",
+      "context": {
+        "input_query": "<? input.text ?>"
+      },
+      "conditions": "@waste:styrofoam",
+      "dialog_node": "response_10_1593540243814",
+      "previous_sibling": "response_10_1593540211720"
+    },
+    {
+      "type": "standard",
+      "title": "Query more",
+      "output": {
+        "generic": [
+          {
+            "query": "$input_query",
+            "filter": "",
+            "query_type": "natural_language",
+            "response_type": "search_skill"
+          }
+        ]
+      },
+      "parent": "node_10_1584231342659",
+      "conditions": "#Genera_Rejects",
+      "dialog_node": "node_4_1593456874943"
+    },
+    {
+      "type": "standard",
+      "title": "No Image",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi, thank you for using Eco Logic. We are currently in our beta version."
+              },
+              {
+                "text": "We can guide you on recycling plastic, styrofoam, cardboard and food packaging."
+              },
+              {
+                "text": "The picture you sent us does not fit into any of the categories above. Before taking any action, we invite you to think if you could use it again or donate it for someone else to use it."
+              },
+              {
+                "text": "Thanks again, we hope to add recycling guides to other types of objects in the near future"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "conditions": "$images.size() == 0",
+      "dialog_node": "node_4_1593534936545",
+      "previous_sibling": "node_10_1593444509716"
+    },
+    {
+      "type": "standard",
+      "title": "Plastic Bottle",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I'm <? $images.filter( \"img\", \"img.name=='plastic bottle'\" ).get(0).confidence ?> there is/are <? $images.filter( \"img\", \"img.name=='plastic bottle'\" ).size() ?> plastic bottle."
+              },
+              {
+                "text": "Plastic bottles are <? $images.filter( \"img\", \"img.name=='plastic bottle'\" ).get(0).category ?>. "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "values": [
+              {
+                "text": "Clean them and let them dry before recycling. Remember to remove the labels and rings."
+              },
+              {
+                "text": "Rinse bottles and remove the labels and rings before placing them in your recycling bin. "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          },
+          {
+            "values": [
+              {
+                "text": "Avoid single-use plastic bottles when possible 😉"
+              },
+              {
+                "text": "Did you know that plastic can be recycled at least 10 times? "
+              },
+              {
+                "text": "Do not put prescription bottles or sample-sized bottles in your regular recycling bins, instead contact your county or city to find out how to properly dispose of or recycle them."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_6_1593438508510"
+      },
+      "conditions": "$images.![name].contains('plastic bottle')",
+      "dialog_node": "node_9_1593440356687",
+      "previous_sibling": "response_7_1593440901488"
+    },
+    {
+      "type": "standard",
+      "title": "Plastic Cap",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I'm <? $images.filter( \"img\", \"img.name=='plastic cap'\" ).get(0).confidence ?> there is/are <? $images.filter( \"img\", \"img.name=='plastic cap'\" ).size() ?> plastic cap."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "values": [
+              {
+                "text": "Plastic caps are <? $images.filter( \"img\", \"img.name=='plastic cap'\" ).get(0).category ?>. They are easy to miss in the recycling process. Its very important to detach them from the plastic bottles and if possible deposit them in an special trash can only for plastic caps"
+              },
+              {
+                "text": "Assuming you left the cap on the bottle, the first step in the recycling process is to separate the bottles and caps into their individual resins. Let's separate the bottles from the caps at home to help them in the plastic recycling process."
+              },
+              {
+                "text": "You can reuse plastic caps, specially those used for detergent jugs which often have measurements on the side. "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_10_1593440783736"
+      },
+      "conditions": "$images.![name].contains('plastic cap')",
+      "dialog_node": "node_6_1593438508510",
+      "previous_sibling": "node_9_1593440356687"
+    },
+    {
+      "type": "standard",
+      "title": "Plastic Food Container",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I'm <? $images.filter( \"img\", \"img.name=='plastic food container'\" ).get(0).confidence ?> there is/are <? $images.filter( \"img\", \"img.name=='plastic food container'\" ).size() ?> plastic container."
+              },
+              {
+                "text": "Plastic containers are <? $images.filter( \"img\", \"img.name=='plastic food container'\" ).get(0).category ?>."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "values": [
+              {
+                "text": "There are several new options like paper or cardboard food containers you could try."
+              },
+              {
+                "text": "Most recyclable plastics have the numbers on them, often on the bottom, and one through seven are usually accepted. Many disposable utensils cannot be included, unfortunately, due to the low quality blend of plastics used."
+              },
+              {
+                "text": "Before throwing other types of plastics in the recycling bin, confirm that your recycling hauler will accept them. Refer to the numbers on the bottoms of containers. (#3-#7)"
+              },
+              {
+                "text": "Compostable plastics are only compostable in industrial or commercial compost processing facilities."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_4_1593444405453"
+      },
+      "conditions": "$images.![name].contains('plastic food container')",
+      "dialog_node": "node_9_1593442723399",
+      "previous_sibling": "node_10_1593440783736"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Umm..."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "conditions": "$images.size() == 0",
+      "dialog_node": "response_9_1593539770409",
+      "previous_sibling": "response_9_1593440873794"
+    },
+    {
+      "type": "standard",
+      "title": "Plastic Bag",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I'm <? $images.filter( \"img\", \"img.name=='plastic bag'\" ).get(0).confidence ?> there is/are <? $images.filter( \"img\", \"img.name=='plastic bag'\" ).size() ?> plastic bag."
+              },
+              {
+                "text": "Plastic bags are <? $images.filter( \"img\", \"img.name=='plastic cap'\" ).get(0).category ?>."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "values": [
+              {
+                "text": "They are very difficult to recycle, that's why its recommended to reuse them in your home. Clean them and dry them, then you can use it for garbage disposal."
+              },
+              {
+                "text": "Avoid single-use items as much as possible. Tote bags have a larger life-cycle and can be folded into many shapes."
+              },
+              {
+                "text": "If you can easily crumple the plastic, such as with a baggie, do not include it in your recycling bin. Plastic bags are not accepted curbside, but your local grocery store may collect them."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_9_1593442723399"
+      },
+      "conditions": "$images.![name].contains('plastic bag')",
+      "dialog_node": "node_10_1593440783736",
+      "previous_sibling": "node_6_1593438508510"
+    },
+    {
+      "type": "standard",
+      "title": "Cardboard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I'm <? $images.filter( \"img\", \"img.name=='cardboard'\" ).get(0).confidence ?> there is/are <? $images.filter( \"img\", \"img.name=='cardboard'\" ).size() ?> cardboard."
+              },
+              {
+                "text": "Cardboards are <? $images.filter( \"img\", \"img.name=='cardboard'\" ).get(0).category ?>. "
+              },
+              {
+                "text": "Recycling cardboard is very easy. Just make sure it's clean and separated from other types of paper and tape. (This includes pizza boxes 😉)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "values": [
+              {
+                "text": "Recycling cardboard only takes 75% of the energy needed to make new cardboard."
+              },
+              {
+                "text": "Did you know that making 1 ton of virgin cardboard requires 3 tons of trees? "
+              },
+              {
+                "text": "Over half of the cardboard collected is used to make new cardboard boxes, and additional cardboard can be down cycled into paperboard (used for cereal boxes) or chipboard (used for shoe boxes)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_10_1593444509716"
+      },
+      "conditions": "$images.![name].contains('cardboard')",
+      "dialog_node": "node_10_1593444427839",
+      "previous_sibling": "node_4_1593444405453"
+    },
+    {
+      "type": "standard",
+      "title": "Snack packages",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I'm <? $images.filter( \"img\", \"img.name=='al pp package'\" ).get(0).confidence ?> there is/are <? $images.filter( \"img\", \"img.name=='al pp package'\" ).size() ?> snack package."
+              },
+              {
+                "text": "Snack Packages are <? $images.filter( \"img\", \"img.name=='al pp package'\" ).get(0).category ?>. "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "values": [
+              {
+                "text": "They are very hard to recycle; however, some companies reuse them, some don't. Before recycling make sure all packages clean."
+              },
+              {
+                "text": "The shiny lining in chip bags is often aluminum or a special mixed plastic. Since some recycling plants cannot separate the plastic outer layer from the aluminum inner layer, these mixed-material bags are hard to be recycled. However, we can contribute by cleaning all packages."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_4_1593534936545"
+      },
+      "conditions": "$images.![name].contains('al pp package')",
+      "dialog_node": "node_10_1593444509716",
+      "previous_sibling": "node_10_1593444427839"
+    },
+    {
+      "type": "standard",
+      "title": "Styrofoam",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I'm <? $images.filter( \"img\", \"img.name=='styrofoam'\" ).get(0).confidence ?> there is/are <? $images.filter( \"img\", \"img.name=='styrofoam'\" ).size() ?> styrofoam."
+              },
+              {
+                "text": "Styrofoams are <? $images.filter( \"img\", \"img.name=='styrofoam'\" ).get(0).category ?>."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "values": [
+              {
+                "text": "There are several new options like paper food containers you could try."
+              },
+              {
+                "text": "Styrofoam is not recyclable in our curbside bin but then why does it have a recycling symbol on it? Since it has polystyrene, it does have properties that make it recyclable, but it has to be taken to the right location. Anyway, reusable containers are better :)"
+              },
+              {
+                "text": "As far as foamed #6 plastic cups and containers go, you're best off avoiding them whenever possible since they are rarely accepted for recycling. Check your closest Styrofoam recycling location."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_10_1593444427839"
+      },
+      "conditions": "$images.![name].contains('styrofoam')",
+      "dialog_node": "node_4_1593444405453",
+      "previous_sibling": "node_9_1593442723399"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Let' see... Im detecting  one object"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "dialog_node": "response_7_1593440901488",
+      "previous_sibling": "response_9_1593539770409"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Let' see... Im detecting  <? $images.size() ?> objects"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1593400006221",
+      "conditions": "$images.size() > 1",
+      "dialog_node": "response_9_1593440873794"
+    },
+    {
+      "type": "standard",
+      "title": "Image Classification",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$images && input.text==\"images\"",
+      "dialog_node": "node_1_1593400006221",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "OK. See you later."
+              },
+              {
+                "text": "Take care"
+              },
+              {
+                "text": "Bye"
+              },
+              {
+                "text": "Stay safe"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#General_Ending",
+      "dialog_node": "node_4_1584218971201",
+      "previous_sibling": "node_7_1593550611429"
+    },
+    {
+      "type": "standard",
+      "title": "Classification Question",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#classify-waste",
+      "dialog_node": "node_10_1584231342659",
+      "previous_sibling": "node_4_1593539501309"
+    },
+    {
+      "type": "standard",
+      "title": "About bot",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi, thank you for using Eco Logic. We are currently in our beta version."
+              },
+              {
+                "text": "We can guide you on recycling plastic, styrofoam, cardboard and food packaging."
+              },
+              {
+                "text": "You can send me a Picture and I will try to help you classify it and give you some tips on how to recycle. Also you can ask me questions about recycling and I'll try to answer them."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "conditions": "#General_About_You && #General_Agent_Capabilities",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_6_1593545930306",
+      "previous_sibling": "node_10_1584231342659"
+    },
+    {
+      "type": "standard",
+      "title": "Image Error",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi, thank you for using Eco Logic. We are currently in our beta version."
+              },
+              {
+                "text": "We are having trouble processing your picture, please try again, make sure its in .PNG or .JPG format."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "conditions": "input.text == \"no-images\"",
+      "dialog_node": "node_4_1593539501309",
+      "previous_sibling": "node_1_1593400006221"
+    },
+    {
+      "type": "standard",
+      "title": "Human or Bot",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi, thank you for using Eco Logic. Im a bot currently in a beta version."
+              },
+              {
+                "text": "We can guide you on recycling plastic, styrofoam, cardboard and food packaging."
+              },
+              {
+                "text": "You can send me a Picture and I will try to help you classify it and give you some tips on how to recycle. Also you can ask me questions about recycling and I'll try to answer them."
+              },
+              {
+                "text": "Thank you for your patience ;)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "conditions": "#General_Human_or_Bot",
+      "dialog_node": "node_7_1593550611429",
+      "previous_sibling": "node_6_1593545930306"
+    },
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "We are currently in our beta version. We are working to improve our scope"
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_4_1584218971201",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Welcome to Eco Logic"
+              },
+              {
+                "text": "Hi! Welcome to Eco Logic"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          },
+          {
+            "values": [
+              {
+                "text": "Let me help you to start going green, let's recycle together!"
+              },
+              {
+                "text": "Lets recycle together!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          },
+          {
+            "values": [
+              {
+                "text": "We are currently in our beta version. We can guide you on recycling some plastic, styrofoam, cardboard and some food packaging."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "To start, just send me a picture of what you wish to recycle, I will analyze it and tell you what to do next"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome || #General_Greetings",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [
+    {
+      "text": "who is the president of us"
+    }
+  ],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": false,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "starter-kit-jrt-test",
+  "language": "en",
+  "description": ""
+}
