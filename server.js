@@ -75,7 +75,7 @@ app.get('/', (req, res) => {
  * Returns a session ID that can be used in subsequent message API calls.
  */
 app.get('/api/session', (req, res) => {
-  if (req.body.app_apikey == process.env.APP_API_KEY) {
+  if (req.body.app_apikey == apikey) {
     assistant
       .session()
       .then(sessionid => res.send(sessionid))
