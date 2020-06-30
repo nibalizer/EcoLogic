@@ -205,36 +205,6 @@ app.post('/api/resource', (req, res) => {
 });
 
 /**
- * Update new resource
- *
- * The body may contain any of the valid attributes, with their new values. Attributes
- * not included will be left unmodified.
- * 
- * The new rev of the resource will be returned if successful
- */
-
-app.patch('/api/resource/:id', (req, res) => {
-  const type = req.body.type || '';
-  const name = req.body.name || '';
-  const description = req.body.description || '';
-  const userID = req.body.userID || '';
-  const quantity = req.body.quantity || '';
-  const location = req.body.location || '';
-  const confidence = req.body.confidence || '';
-
-  cloudant
-    .update(req.params.id, type, name, description, quantity, location, userID)
-    .then(data => {
-      if (data.statusCode != 200) {
-        res.sendStatus(data.statusCode)
-      } else {
-        res.send(data.data)
-      }
-    })
-    .catch(err => handleError(res, err));
-});
-
-/**
  * Delete a resource
  */
 app.delete('/api/resource/:id', (req, res) => {
