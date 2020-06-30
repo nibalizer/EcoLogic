@@ -116,7 +116,6 @@ function post_process_assistant(result) {
  * A list of resource objects will be returned (which can be an empty list)
  */
 app.get('/api/resource', (req, res) => {
-  if ( req.body.apikey == apikey  ) {
     const type = req.query.type;
     const name = req.query.name;
     const userID = req.query.userID;
@@ -130,9 +129,6 @@ app.get('/api/resource', (req, res) => {
         }
       })
       .catch(err => handleError(res, err));
-  } else {
-    res.sendStatus(401)
-  }
 });
 
 /**
