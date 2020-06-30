@@ -116,7 +116,7 @@ function post_process_assistant(result) {
  * A list of resource objects will be returned (which can be an empty list)
  */
 app.get('/api/resource', (req, res) => {
-  if (req.body.app_apikey == process.env.APP_APIKEY) {
+  if ( req.body.apikey == apikey  ) {
     const type = req.query.type;
     const name = req.query.name;
     const userID = req.query.userID;
@@ -130,6 +130,8 @@ app.get('/api/resource', (req, res) => {
         }
       })
       .catch(err => handleError(res, err));
+  } else {
+    res.sendStatus(401)
   }
 });
 
@@ -153,7 +155,7 @@ let types = ["Not Recyclable", "Recyclable", "Organic",]
 let names = ["Styrofoam", "Plastic bag", "Batteries", "Plastic", "Cardboard", "Paper", "Metal", "Glass", "Leather", "Aluminum/Plastic Packaging", "Fruit", "Vegetable", "Coffee", "Gardening"]
 
 app.post('/api/resource', (req, res) => {
-  if (req.body.app_apikey == process.env.APP_APIKEY) {
+  if ( req.body.apikey == apikey  ) {
     if (!req.body.type) {
       return res.status(422).json({ errors: "Type of item must be provided" });
     }
@@ -181,6 +183,8 @@ app.post('/api/resource', (req, res) => {
         }
       })
       .catch(err => handleError(res, err));
+  } else {
+    res.sendStatus(401)
   }
 });
 
