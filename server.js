@@ -1,4 +1,4 @@
-require('dotenv').config({silent: true})
+require('dotenv').config({ silent: true })
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -75,11 +75,14 @@ app.get('/', (req, res) => {
  * Returns a session ID that can be used in subsequent message API calls.
  */
 app.get('/api/session', (req, res) => {
-  assistant
-    .session()
-    .then(sessionid => res.send(sessionid))
-    .catch(err => handleError(res, err));
+  if (req.body.app_apikey == process.env.APP_API_KEY) {
+    assistant
+      .session()
+      .then(sessionid => res.send(sessionid))
+      .catch(err => handleError(res, err));
+  }
 });
+
 
 /**
  * Post process the response from Watson Assistant
@@ -100,34 +103,6 @@ function post_process_assistant(result) {
   return Promise.resolve(result)
 }
 
-/**
- * Post a messge to Watson Assistant
- *
- * The body must contain:
- * 
- * - Message text
- * - sessionID (previsoulsy obtained by called /api/session)
- */
-app.post('/api/message', (req, res) => {
-  const text = req.body.text || '';
-  const sessionid = req.body.sessionid;
-  console.log(req.body)
-
-  wa_context.find(sessionid)
-        .then(data => {
-          return assistant.message(text, data.context);
-        })
-        .then(result => {
-          return post_process_assistant(result)
-        })
-        .then(result => {
-          return handleSession(result, sessionid);
-        })
-    .then(new_result => {
-      res.json(new_result)
-    })
-    .catch(err => handleError(res, err));
-});
 
 /**
  * Get a list of resources
@@ -141,19 +116,21 @@ app.post('/api/message', (req, res) => {
  * A list of resource objects will be returned (which can be an empty list)
  */
 app.get('/api/resource', (req, res) => {
-  const type = req.query.type;
-  const name = req.query.name;
-  const userID = req.query.userID;
-  cloudant
-    .find(type, name, userID)
-    .then(data => {
-      if (data.statusCode != 200) {
-        res.sendStatus(data.statusCode)
-      } else {
-        res.send(data.data)
-      }
-    })
-    .catch(err => handleError(res, err));
+  if (req.body.app_apikey == process.env.APP_APIKEY) {
+    const type = req.query.type;
+    const name = req.query.name;
+    const userID = req.query.userID;
+    cloudant
+      .find(type, name, userID)
+      .then(data => {
+        if (data.statusCode != 200) {
+          res.sendStatus(data.statusCode)
+        } else {
+          res.send(data.data)
+        }
+      })
+      .catch(err => handleError(res, err));
+  }
 });
 
 /**
@@ -172,37 +149,39 @@ app.get('/api/resource', (req, res) => {
  * 
  * The ID and rev of the resource will be returned if successful
  */
-let types = ["Not Recyclable", "Recyclable", "Organic", ]
+let types = ["Not Recyclable", "Recyclable", "Organic",]
 let names = ["Styrofoam", "Plastic bag", "Batteries", "Plastic", "Cardboard", "Paper", "Metal", "Glass", "Leather", "Aluminum/Plastic Packaging", "Fruit", "Vegetable", "Coffee", "Gardening"]
 
 app.post('/api/resource', (req, res) => {
-  if (!req.body.type) {
-    return res.status(422).json({ errors: "Type of item must be provided"});
-  }
-  if (!types.includes(req.body.type)) {
-    return res.status(422).json({ errors: "Type of item must be one of " + types.toString()});
-  }
-  if (!req.body.name) {
-    return res.status(422).json({ errors: "Name of item must be provided"});
-  }
-  const type = req.body.type;
-  const name = req.body.name;
-  const description = req.body.description || '';
-  const userID = req.body.userID || '';
-  const quantity = req.body.quantity || 1;
-  const location = req.body.location || '';
-  const confidence = req.body.confidence || '';
+  if (req.body.app_apikey == process.env.APP_APIKEY) {
+    if (!req.body.type) {
+      return res.status(422).json({ errors: "Type of item must be provided" });
+    }
+    if (!types.includes(req.body.type)) {
+      return res.status(422).json({ errors: "Type of item must be one of " + types.toString() });
+    }
+    if (!req.body.name) {
+      return res.status(422).json({ errors: "Name of item must be provided" });
+    }
+    const type = req.body.type;
+    const name = req.body.name;
+    const description = req.body.description || '';
+    const userID = req.body.userID || '';
+    const quantity = req.body.quantity || 1;
+    const location = req.body.location || '';
+    const confidence = req.body.confidence || '';
 
-  cloudant
-    .create(type, name, description, quantity, location, confidence)
-    .then(data => {
-      if (data.statusCode != 201) {
-        res.sendStatus(data.statusCode)
-      } else {
-        res.send(data.data)
-      }
-    })
-    .catch(err => handleError(res, err));
+    cloudant
+      .create(type, name, description, quantity, location, confidence)
+      .then(data => {
+        if (data.statusCode != 201) {
+          res.sendStatus(data.statusCode)
+        } else {
+          res.send(data.data)
+        }
+      })
+      .catch(err => handleError(res, err));
+  }
 });
 
 /**
@@ -228,41 +207,41 @@ function isURLVerificationEvent(mode, token) {
 
 function isPageObject(params) {
   if (!(params.object === 'page')) {
-   console.log("Does not come from facebook");
-   return false;
+    console.log("Does not come from facebook");
+    return false;
   }
   console.log("Comes from facebook");
   return true;
 }
 
 app.get('/fb', function (req, res) {    // Parse the query params
-    let mode = req.query['hub.mode'];
-    let token = req.query['hub.verify_token'];
-    let challenge = req.query['hub.challenge'];    if (isURLVerificationEvent(mode, token)) {
-        // Responds with the challenge token from the request
-        console.log("WEBHOOK VERIFIED");
-        res.status(200).send(challenge);
-    } else {
-        // Responds with ‘403 Forbidden’ if verify tokens do not match
-        console.log("WEBHOOK INVALID");
-        console.log(req.query);
-        res.sendStatus(403);
-    }
+  let mode = req.query['hub.mode'];
+  let token = req.query['hub.verify_token'];
+  let challenge = req.query['hub.challenge']; if (isURLVerificationEvent(mode, token)) {
+    // Responds with the challenge token from the request
+    console.log("WEBHOOK VERIFIED");
+    res.status(200).send(challenge);
+  } else {
+    // Responds with ‘403 Forbidden’ if verify tokens do not match
+    console.log("WEBHOOK INVALID");
+    console.log(req.query);
+    res.sendStatus(403);
+  }
 })
 
-app.post('/fb',  function (req, res) {
+app.post('/fb', function (req, res) {
   try {
-      let body = req.body;
-      if (isPageObject(body)) {
-        console.log(body);
-        
-        const sessionId = body.entry[0].messaging[0].sender.id;
-        const text = body.entry[0].messaging[0].message.text;
-        const attachments = body.entry[0].messaging[0].message.attachments;
-        //console.log(sessionId,text,attachments);
-        
-        wa_context.find(sessionId)
-        .then( data => {
+    let body = req.body;
+    if (isPageObject(body)) {
+      console.log(body);
+
+      const sessionId = body.entry[0].messaging[0].sender.id;
+      const text = body.entry[0].messaging[0].message.text;
+      const attachments = body.entry[0].messaging[0].message.attachments;
+      //console.log(sessionId,text,attachments);
+
+      wa_context.find(sessionId)
+        .then(data => {
           //console.log(data);
           return handleAttachments(attachments, data.doc.context, text)
         })
@@ -278,14 +257,14 @@ app.post('/fb',  function (req, res) {
           console.log(result);
           (async function loop() {
             for (let i = 0; i < result.output.generic.length; i++) {
-                const msg = result.output.generic[i];
-                await postFacebook(msg, sessionId);
-                console.log(i);
+              const msg = result.output.generic[i];
+              await postFacebook(msg, sessionId);
+              console.log(i);
             }
-        })()
-        .catch(err => console.log(err));
-        
-        return result;
+          })()
+            .catch(err => console.log(err));
+
+          return result;
           //for (let i = 0; i < result.generic.length; i++) {
           //  const msg = result.generic[i];
           //  await postFacebook(msg.text, sessionId);
@@ -298,18 +277,18 @@ app.post('/fb',  function (req, res) {
         })
         .then(new_result => {
           res.json({
-            text: 200, 
+            text: 200,
             message: new_result
           })
         })
         .catch(err => handleError(res, err));
-      }
-    }catch (err) {
-      console.error('Caught error: ');
-      console.log(err);
-      res.status(500).send(err)
     }
-  })
+  } catch (err) {
+    console.error('Caught error: ');
+    console.log(err);
+    res.status(500).send(err)
+  }
+})
 
 /**
  *  Poste la respuesta de la convesacion al messenger usando el Facebook API https://graph.facebook.com/v2.6/me/messages
@@ -330,7 +309,7 @@ function postFacebook(msg, userid) {
     message: getMessageType(msg)
   };
 
-  return new Promise(function(resolve, reject){
+  return new Promise(function (resolve, reject) {
     request(
       {
         url: fb_postUrl,
@@ -338,7 +317,7 @@ function postFacebook(msg, userid) {
         method: 'POST',
         json: facebookParams
       },
-      function(error, response)  {
+      function (error, response) {
         if (error) {
           //console.log(error);
           return reject(error.message);
@@ -365,98 +344,98 @@ function postFacebook(msg, userid) {
  * @return {JSON} - El archivo adjunto o el mensaje de texto
  */
 function getMessageType(msg) {
-    
-  if(msg.response_type=='search'){
+
+  if (msg.response_type == 'search') {
     var textresponse = msg.header + "\n" + "\n";
-    
-    for (let i = 0; i < Math.min(msg.results.length, 2 ); i++) {
+
+    for (let i = 0; i < Math.min(msg.results.length, 2); i++) {
       const btn = msg.results[i];
       textresponse += btn.title + "\n";
-      textresponse += btn.body.slice(0, 100) + "...\n"; 
+      textresponse += btn.body.slice(0, 100) + "...\n";
       textresponse += btn.url + "\n";
-      textresponse += "\n"; 
+      textresponse += "\n";
     }
     console.log(textresponse);
-    
+
     return { text: textresponse };
   }
-  if(msg.response_type=='text'){
+  if (msg.response_type == 'text') {
     return { text: msg.text };
   }
   return { text: msg.text };
 }
 
 
-function handleAttachments(attachments, context, text){
+function handleAttachments(attachments, context, text) {
   //console.log(context);
-  
-  return new Promise(function(resolve, reject){
-    if(attachments && attachments[0].type == 'image'){
+
+  return new Promise(function (resolve, reject) {
+    if (attachments && attachments[0].type == 'image') {
       vr.analyze(attachments[0].payload.url)
-      .then(result => {
-        if(!context.skills){
-          context.skills = {};
-        }
-        if(!context.skills['main skill']){
-          context.skills['main skill'] = {};
-        }
-        if(!context.skills['main skill'].user_defined){
-          context.skills['main skill'].user_defined = {};
-        }
-        context.skills['main skill'].user_defined.images = result;
+        .then(result => {
+          if (!context.skills) {
+            context.skills = {};
+          }
+          if (!context.skills['main skill']) {
+            context.skills['main skill'] = {};
+          }
+          if (!context.skills['main skill'].user_defined) {
+            context.skills['main skill'].user_defined = {};
+          }
+          context.skills['main skill'].user_defined.images = result;
 
-        for (const img of result) {
+          for (const img of result) {
 
-          const type = img.category;
-          const name = img.name;
-          const description = '';
-          const quantity = 1;
-          const location = '';
-          const confidence = img.raw_confidence
+            const type = img.category;
+            const name = img.name;
+            const description = '';
+            const quantity = 1;
+            const location = '';
+            const confidence = img.raw_confidence
 
-          cloudant.create(type, name, description, quantity, location, confidence)
-        }
-        resolve({text: "images", context: context });
-      })
-    }else{
-      resolve({text: text, context : context});
+            cloudant.create(type, name, description, quantity, location, confidence)
+          }
+          resolve({ text: "images", context: context });
+        })
+    } else {
+      resolve({ text: text, context: context });
     }
   });
 }
 
-function handleSession(result,sessionId){
-  if(result.delete){
+function handleSession(result, sessionId) {
+  if (result.delete) {
     "Destroying Context"
     return wa_context.deleteById(sessionId);
-  }else{
+  } else {
     console.log("Saving Context");
     return wa_context.update(sessionId, result.context);
   }
 }
 
-app.get('/dashboard',function(req,res){
-  res.sendFile(path.join(__dirname+'/public/dashboard.html'));
+app.get('/dashboard', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/dashboard.html'));
 })
 
-app.get('/team',function(req,res){
-  res.sendFile(path.join(__dirname+'/public/team.html'));
+app.get('/team', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/team.html'));
 })
 
-app.get('/privacy',function(req,res){
-  res.sendFile(path.join(__dirname+'/public/privacy.html'));
+app.get('/privacy', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/privacy.html'));
 })
 
-app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/public/index.html'));
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/index.html'));
 })
 
 app.use(express.static('public'));
 
 const server = app.listen(port, () => {
-   const host = server.address().address;
-   const port = server.address().port;
-   console.log(`EcoLogic: recycle app listening at http://${host}:${port}`);
+  const host = server.address().address;
+  const port = server.address().port;
+  console.log(`EcoLogic: recycle app listening at http://${host}:${port}`);
 });
 
-//console.log(vr.analyze("https://ak.picdn.net/shutterstock/videos/1014467753/thumb/6.jpg"));
+console.log(vr.analyze("https://i.pinimg.com/originals/f9/be/45/f9be45571077d108655addfeaf8b931e.jpg"));
 //console.log(assistant.message('Hi'));
