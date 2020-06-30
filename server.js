@@ -8,6 +8,7 @@ const path = require('path');
 
 const assistant = require('./lib/assistant.js');
 const port = process.env.PORT || 3000
+const apikey = process.env.APP_API_KEY || 'hunter2'
 
 const cloudant = require('./lib/cloudant.js');
 
@@ -208,10 +209,14 @@ app.post('/api/resource', (req, res) => {
  * Delete a resource
  */
 app.delete('/api/resource/:id', (req, res) => {
-  cloudant
-    .deleteById(req.params.id)
-    .then(statusCode => res.sendStatus(statusCode))
-    .catch(err => handleError(res, err));
+  if ( req.body.apikey == apikey  ) {
+    cloudant
+      .deleteById(req.params.id)
+      .then(statusCode => res.sendStatus(statusCode))
+      .catch(err => handleError(res, err));
+  } else {
+    res.sendStatus(401)
+  }
 });
 
 function isURLVerificationEvent(mode, token) {
