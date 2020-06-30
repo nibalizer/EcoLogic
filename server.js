@@ -362,7 +362,7 @@ function getMessageType(msg) {
   if (msg.response_type == 'text') {
     return { text: msg.text };
   }
-  return { text: msg.text };
+  return { text: 'Umm.. Something went wrong. Let\'s try that again' };
 }
 
 
