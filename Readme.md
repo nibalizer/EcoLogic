@@ -22,6 +22,12 @@ Architecture
 * The assistant uses the discovery to search more information about recycling
 * Cloudant is our database for the recycling events dashboard
 
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" poster="public/demo.png">
+    <source src="public/demo.mp4" type="video/mp4">
+  </video>
+</figure>
+
 
 Development
 ===========
