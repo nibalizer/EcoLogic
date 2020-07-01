@@ -8,6 +8,9 @@ We are currently in our beta version. We can guide you on recycling some plastic
 Vist our [Web Page](http://ecologic-2020.mybluemix.net/).
 Find us on [Facebook](https://www.facebook.com/Eco-Logic-107364791033184) (Our facebook app is in the process of being aproved).
 
+Check our [demo](public/demo.mp4) !
+
+
 Uses a forked version of the Call for Code Community Collaboration Starter Kit.
 
 Architecture
@@ -22,11 +25,6 @@ Architecture
 * The assistant uses the discovery to search more information about recycling
 * Cloudant is our database for the recycling events dashboard
 
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="public/demo.png">
-    <source src="public/demo.mp4" type="video/mp4">
-  </video>
-</figure>
 
 
 Development
