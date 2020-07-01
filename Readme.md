@@ -6,7 +6,7 @@ Eco Logic is a Call For Code 2020 hackathon solution.
 We are currently in our beta version. We can guide you on recycling some plastics, styrofoam, cardboard and some food packaging. We hope to add recycling guides for other types of objects in the near future.
 
 Vist our [Web Page](http://ecologic-2020.mybluemix.net/).
-Find us on [Facebook](https://www.facebook.com/Eco-Logic-107364791033184).
+Find us on [Facebook](https://www.facebook.com/Eco-Logic-107364791033184) (Our facebook app is in the process of being aproved).
 
 Uses a forked version of the Call for Code Community Collaboration Starter Kit.
 
